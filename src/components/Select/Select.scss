@@ -1,0 +1,49 @@
+.select {
+  z-index: 9999;
+  position: relative;
+  width: fit-content;
+  .select-button {
+    min-width: 97px;
+    transition: border-radius 0.1s ease;
+    &:active, &:focus {
+      outline: none;
+    }
+    &:hover {
+      border-color: #1a1a1a;
+    }
+  }
+  .select-options {
+    opacity: 0;
+    margin-top: -10px;
+    pointer-events: none;
+    transition: margin-top 0.4s ease;
+    z-index: 999;
+    background-color: #1a1a1a;
+    position: absolute;
+    width: 100%;
+    border-radius: 0 0 20px 20px;
+    border-top: 2px solid #fff;
+    overflow: hidden;
+    &:hover {
+      cursor: pointer;
+    }
+    p {
+      padding: 8px 6px;
+      &:hover {
+        background-color: #2a2a2a;
+      }
+    }
+  }
+
+  &.open {
+    .select-button {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    .select-options {
+      opacity: 1;
+      pointer-events: all;
+      margin-top: -0.6px;
+    }
+  }
+}

@@ -1,0 +1,56 @@
+.card {
+  border: 3px solid #001e32;
+  background-color: #082f49b1;
+  border-radius: 20px;
+  filter: drop-shadow(0 0 1rem #1b262dd0);
+  transition: all 0.2s ease;
+  color: #ffffff;
+  &:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 0.5rem #000000d0);
+  }
+  &.open {
+    background-color: #3a4908b1;
+    border-color: #1c3200;
+  }
+  &.inProgress {
+    border-color: #001e32;
+    background-color: #082f49b1;
+  }
+  &.done {
+    background-color: #084921b1;
+    border-color: #003218;
+  }
+}
+
+.state-icon {
+  width: fit-content;
+  height: fit-content;
+  &.rotate-icon {
+    animation: rotate 6s linear infinite; 
+  }
+  &.blink-icon {
+    animation: blink 4s linear infinite;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes blink {
+  0% {
+    color: rgb(196, 116, 116);
+  }
+  50% {
+    color: white; 
+  }
+  100% {
+    color: rgb(196, 116, 116);
+  }
+}

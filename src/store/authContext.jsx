@@ -1,5 +1,4 @@
 import React, { createContext, useState } from "react";
-import { Navigate } from "react-router-dom";
 
 const USER_INITIALIZER = {
   name: "",
