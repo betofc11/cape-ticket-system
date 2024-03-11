@@ -3,6 +3,7 @@
   position: relative;
   width: fit-content;
   .select-button {
+    justify-content: space-between;
     min-width: 97px;
     transition: border-radius 0.1s ease;
     &:active, &:focus {

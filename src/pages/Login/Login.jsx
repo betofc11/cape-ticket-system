@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import "./Login.scss";
 import AuthContext from "../../store/authContext";
@@ -24,8 +24,6 @@ const Login = () => {
       [event.target.id]: event.target.value,
     }));
   };
-
-  useEffect(() => console.log(data), [data]);
 
   return !isLoggedIn ? (
     <LayoutWrapper>

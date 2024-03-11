@@ -13,6 +13,10 @@ const Home = () => {
 
   const selectOptions = [
     {
+      text: "All",
+      value: "all",
+    },
+    {
       text: "Active",
       value: "inProgress",
     },
@@ -48,7 +52,7 @@ const Home = () => {
   return (
     <LayoutWrapper>
       <section>
-        <Select options={selectOptions} setSelected={setActiveFilter} className="my-12"/>
+        <Select options={selectOptions} setSelected={setActiveFilter} className="my-12" iconName="filter_list" label="Filter..." />
         <ul className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4">
           {data.map((issue) => (
             <li key={`item-${issue.id}`} className="flex">

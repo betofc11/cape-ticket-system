@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./Select.scss";
 
-const Select = ({ options, setSelected, className }) => {
-  const [active, setActive] = useState({ text: "Filter...", value: undefined });
+const Select = ({ options, setSelected, className, iconName, label = "..." }) => {
+  const [active, setActive] = useState({ text: label, value: undefined });
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => {
@@ -22,11 +22,10 @@ const Select = ({ options, setSelected, className }) => {
         onClick={toggleOpen}
       >
         {active.text}
-        <span className="material-symbols-outlined ml-2">filter_list</span>
+        {iconName && <span className="material-symbols-outlined ml-2">{iconName}</span>}
       </button>
       <div className="select-options">
-        <p onClick={() => handleSelect({ text: "All", value: "all" })}>All</p>
-        {options.map((option) => (
+        {options && options.map((option) => (
           <p
             key={option.value}
             id={option.value}
