@@ -1,27 +1,41 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 import issues from "../../data/issues.json";
 import firebase from "../../../firebase";
-import { ref, set, getDatabase, onValue } from "firebase/database";
+import { ref, set, getDatabase, onValue, update } from "firebase/database";
+import { reducer } from "../../reducers/issueReducer";
 
 const db = getDatabase(firebase);
 
-const useFetch = () => {
-  const [data, setData] = useState([]);
+const initialState = {
+  data: [],
+  singleData: {},
+  error: '',
+}
 
-  const fetchIssues = () => {
+const useFetch = (reference) => {
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  const formatData = (ss) => ({ ...ss.val(), id: ss.key });
+
+  const fetchData = () => {
     try {
-      onValue(ref(db, "issues/"), (ss) => {
-        setData(ss.val());
+      onValue(ref(db, `${reference}/`), (ss) => {
+        const newData = [];
+        ss.forEach((item) => {
+          newData.push(formatData(item));
+        });
+        dispatch({ type: 'FETCH_ALL_SUCCESS', payload: newData })
       });
     } catch (error) {
       console.error(error);
     }
   };
 
-  const getIssue = (id) => {
+  const get = (id) => {
     try {
-      const findedIssue = issues.find((issue) => issue.id === id);
-      return findedIssue ? findedIssue : {};
+      onValue(ref(db, `${reference}/${id}`), (ss) => {
+        dispatch({ type: 'FETCH_ONE_SUCCESS', payload: formatData(ss) })
+      });
     } catch (error) {
       console.error(error);
     }
@@ -35,9 +49,19 @@ const useFetch = () => {
     }
   };
 
-  useEffect(() => fetchIssues(), []);
+  const edit = async (id, body) => {
+    try {
+      return set(ref(db, `${reference}/${id}`), body)
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-  return { data, getIssue, addIssue };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return { state, get, addIssue, edit };
 };
 
 export default useFetch;

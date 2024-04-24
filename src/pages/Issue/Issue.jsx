@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
-import IssueWidget from "../../components/IssueWidget/IssueWidget";
+import IssueWidget from "../../components/IssueDetails/IssueWidget";
 import useFetch from "../../hooks/useFetch/useFetch";
-import IssueForm from "../../components/IssueFrom/IssueForm";
+import ReportsForm from "../../components/IssueDetails/ReportsForm";
 
 const Issue = () => {
   const { id } = useParams();
-  const { getIssue } = useFetch();
+  const { get, state } = useFetch("issues", {});
   const [issueData, setIssueData] = useState({});
 
   useEffect(() => {
-    const actualIssue = getIssue(Number(id));
-    setIssueData(actualIssue);
+    get(id);
   }, []);
+
+  useEffect(() => {
+    setIssueData(state?.singleData);
+  }, [state]);
 
   return (
     <LayoutWrapper>
       <IssueWidget data={issueData} />
-      <IssueForm />
+      <ReportsForm data={issueData}/>
     </LayoutWrapper>
   );
 };

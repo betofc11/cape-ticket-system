@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import "./Select.scss";
 
-const Select = ({ options, setSelected, className, iconName, label = "..." }) => {
-  const [active, setActive] = useState({ text: label, value: undefined });
+const Select = ({
+  options,
+  setSelected,
+  className,
+  iconName,
+  label = "...",
+}) => {
+  const [active, setActive] = useState({ text: undefined, value: undefined });
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => {
@@ -21,19 +27,23 @@ const Select = ({ options, setSelected, className, iconName, label = "..." }) =>
         className="select-button flex drop-shadow-xl hover:drop-shadow-2xl"
         onClick={toggleOpen}
       >
-        {active.text}
-        {iconName && <span className="material-symbols-outlined ml-2">{iconName}</span>}
+        {active.text ? active.text : label}
+        {iconName && (
+          <span className="material-symbols-outlined ml-2">{iconName}</span>
+        )}
       </button>
       <div className="select-options">
-        {options && options.map((option) => (
-          <p
-            key={option.value}
-            id={option.value}
-            onClick={() => handleSelect(option)}
-          >
-            {option.text}
-          </p>
-        ))}
+        {options &&
+          options.map((option) => (
+            <p
+              key={option.value}
+              id={option.value}
+              onClick={() => handleSelect(option)}
+              className={`${option?.active ? "active" : ''}`}
+            >
+              {option.text}
+            </p>
+          ))}
       </div>
     </div>
   );
