@@ -1,13 +1,17 @@
 import React from "react";
+import './Spinner.scss';
 
 const Spinner = ({ width, height }) => {
   return (
-    <img
-      src="https://i.gifer.com/origin/34/34338d26023e5515f6cc8969aa027bca.gif"
-      width={width || null}
-      height={height || null}
-      alt="Loading..."
-    />
+    <div className="spinner-container">
+      <div
+        className="spinner"
+        style={{
+          width: width ? width : '60px',
+          height: height ? height : '60px',
+        }}
+      />
+    </div>
   );
 };
 

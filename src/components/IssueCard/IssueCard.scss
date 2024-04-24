@@ -1,10 +1,15 @@
 .card {
+  transition: all 0.2s ease;
+  color: #ffffff;
+  padding-bottom: 1rem;
+  
+}
+.card-container {
+  filter: drop-shadow(0 0 1rem #1b262dd0);
   border: 3px solid #001e32;
   background-color: #082f49b1;
   border-radius: 20px;
-  filter: drop-shadow(0 0 1rem #1b262dd0);
-  transition: all 0.2s ease;
-  color: #ffffff;
+  overflow: hidden;
   &:hover {
     cursor: pointer;
     filter: drop-shadow(0 0 0.5rem #000000d0);
@@ -12,14 +17,32 @@
   &.open {
     background-color: #3a4908b1;
     border-color: #1c3200;
+    .state-section {
+      background-color: #293505;
+
+    }
   }
   &.inProgress {
     border-color: #001e32;
     background-color: #082f49b1;
+    .state-section {
+      background-color: #052033;
+
+    }
   }
   &.done {
     background-color: #084921b1;
     border-color: #003218;
+    .state-section {
+      background-color: #032c13b1;
+
+    }
+  }
+  .state-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 2rem 1rem 2rem;
   }
 }
 

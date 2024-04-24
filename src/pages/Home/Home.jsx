@@ -1,65 +1,26 @@
 import React, { useEffect, useState } from "react";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import useFetch from "../../hooks/useFetch/useFetch";
-import Select from "../../components/Select/Select";
-import IssueCard from "../../components/IssueCard/IssueCard";
-import { sortByDate } from '../../utils/dateUtils.js'
+import IssueFilter from "../../components/IssueFilter/IssueFilter.jsx";
+import { sortByDate } from "../../utils/dateUtils.js";
+import IssueList from "../../components/IssueList/IssueList.jsx";
 
 const Home = () => {
-  const { data: issuesData } = useFetch();
+  const { state: issuesData } = useFetch('issues', []);
 
-  const [activeFilter, setActiveFilter] = useState(undefined);
   const [data, setData] = useState([]);
 
-  const selectOptions = [
-    {
-      text: "All",
-      value: "all",
-    },
-    {
-      text: "Active",
-      value: "inProgress",
-    },
-    {
-      text: "Finished",
-      value: "done",
-    },
-    {
-      text: "Pending",
-      value: "open",
-    },
-  ];
-
   useEffect(() => {
-    if (activeFilter?.value) {
-      setData(
-        issuesData.filter((issue) => {
-          if (activeFilter.value === 'all') {
-            return issue
-          }
-          return issue.status === activeFilter.value
-        })
-      );
-    } else {
-      setData(issuesData);
-    }
-  }, [activeFilter]);
-
-  useEffect(() => {
-    setData(sortByDate(issuesData));
+    console.log({ issuesData, byDate: sortByDate(issuesData?.data) })
+    // setData(issuesData?.data);
+    setData(sortByDate(issuesData?.data))
   }, [issuesData]);
 
   return (
     <LayoutWrapper>
       <section>
-        <Select options={selectOptions} setSelected={setActiveFilter} className="my-12" iconName="filter_list" label="Filter..." />
-        <ul className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4">
-          {data.map((issue) => (
-            <li key={`item-${issue.id}`} className="flex">
-              <IssueCard option={issue}/>
-            </li>
-          ))}
-        </ul>
+        <IssueFilter data={issuesData?.data} setData={setData} />
+        <IssueList data={data}/>
       </section>
     </LayoutWrapper>
   );
