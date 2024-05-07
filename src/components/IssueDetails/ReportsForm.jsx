@@ -24,7 +24,6 @@ const IssueForm = ({ data }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Sumbmit", reportData);
     setIsModalOpen(true)
     edit(data.id, reportData).then(() => {
       setModalData(`Issue ${reportData?.id} actualizado`)

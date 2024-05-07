@@ -6,8 +6,10 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 const auth = getAuth(firebase);
+const firestore = getFirestore(firebase);
 
 const USER_INITIALIZER = {
   name: "",
@@ -30,11 +32,19 @@ const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const authUser = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser({
-          name: user.displayName,
-          email: user.email
-        })
-        setIsLoggedIn(true)
+        getRole(user.uid).then((res) => {
+          if (res === "admin") {
+            setUser({
+              name: user.displayName,
+              email: user.email,
+            });
+            setIsLoggedIn(true);
+          } else {
+            signOut(auth);
+            setIsLoggedIn(false);
+            setUser(USER_INITIALIZER);
+          }
+        });
       }
     });
 
@@ -43,22 +53,26 @@ const AuthContextProvider = ({ children }) => {
 
   const logIn = async ({ email, password }) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      setIsLoggedIn(true);
+      signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
 
   const logOut = async () => {
     try {
-      await signOut(auth)
-      setUser(USER_INITIALIZER)
-      setIsLoggedIn(false);
+      signOut(auth);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
+
+  const getRole = async (uid) => {
+    const rolRef = doc(firestore, `roles/${uid}`);
+    const roleCifred = await getDoc(rolRef);
+    const role = roleCifred.data();
+    return role.role;
+  };
 
   const values = {
     isLoggedIn,

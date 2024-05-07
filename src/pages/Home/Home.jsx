@@ -11,8 +11,6 @@ const Home = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    console.log({ issuesData, byDate: sortByDate(issuesData?.data) })
-    // setData(issuesData?.data);
     setData(sortByDate(issuesData?.data))
   }, [issuesData]);
 

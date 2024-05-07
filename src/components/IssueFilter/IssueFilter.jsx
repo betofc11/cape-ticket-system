@@ -28,7 +28,6 @@ const IssueFilter = ( { setData, data }) => {
 
 
   useEffect(() => {
-    console.log({ activeFilter, data })
     if (activeFilter?.value) {
       setData(
         data.filter((issue) => {
