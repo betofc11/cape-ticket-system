@@ -2,14 +2,16 @@ import React, { useContext } from "react";
 import logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
 import AuthContext from "../../store/authContext";
+import Pill from "../Pill/Pill";
 
 const Navigation = ({ showOptions = false, options }) => {
   const { isLoggedIn, logOut } = useContext(AuthContext);
   return (
     <nav className="flex w-full justify-between bg-sky-950 p-4 px-12">
       <Link to="/">
-        <div className="logo-container">
+        <div className="flex gap-2">
           <img src={logo} alt="Cape Healthcare" className="w-24" />
+          <Pill customClassName="bg-slate-700 text-white">Admin</Pill>
         </div>
       </Link>
       {options && showOptions && (
