@@ -21,7 +21,7 @@ const IssueWidget = ({ data }) => {
         </div>
         <div>
           <p className="font-extrabold mb-2">Owner: </p>{" "}
-          <p>{data?.ownerName || "-"}</p>
+          <p>{data?.owner?.name || "-"}</p>
         </div>
         <div>
           <p className="font-extrabold mb-2">Status: </p>{" "}

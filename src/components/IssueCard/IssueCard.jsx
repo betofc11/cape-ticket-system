@@ -31,7 +31,7 @@ const IssueCard = ({ option, className }) => {
               {` ${option.medicalEquipmentName}`}
             </p>
             <p className="flex flex-col mb-3">
-              <span className="font-bold">Owner:</span> {option.ownerName}
+              <span className="font-bold">Owner:</span> {option.owner?.name}
             </p>
             <p className="flex flex-col mb-3">
               <span className="font-bold">Date:</span> {option.reportDate}
@@ -40,7 +40,7 @@ const IssueCard = ({ option, className }) => {
           <div className="state-section">
             <p className="flex">
               <span className="font-extrabold text-xl mr-2 text-white">
-                Issue #{option.id}
+                ID: {option.id}
               </span>
             </p>
           </div>
